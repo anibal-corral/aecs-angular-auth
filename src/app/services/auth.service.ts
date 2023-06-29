@@ -23,7 +23,7 @@ export class AuthService {
     .pipe(
       tap( response =>{
         this.tokenService.saveToken(response.access_token)
-      } )
+      })
     )
   }
 
@@ -43,7 +43,8 @@ export class AuthService {
       name,
       email,
       password
-    }).pipe(
+    }).
+    pipe(
       switchMap(()=> this.login(email, password))
     )
 
@@ -72,5 +73,9 @@ export class AuthService {
       token,
       newPassword
     })
+  }
+
+  logout(){
+    this.tokenService.removeToken();
   }
 }
