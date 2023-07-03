@@ -24,4 +24,6 @@ return this.http.get<User[]>(`${this.apiUrl}/api/v1/users`,{
   }
 });
   }
+
+  
 }
