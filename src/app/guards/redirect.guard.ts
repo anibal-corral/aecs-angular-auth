@@ -13,9 +13,10 @@ export class RedirectGuard implements CanActivate {
   ){
 
   }
-  canActivate(){
-    const token = this.tokenService.getToken();
-    if(token) {
+  canActivate():boolean{
+    // const token = this.tokenService.getToken();
+    const isValidToken = this.tokenService.isValidToken();
+    if(isValidToken) {
       this.router.navigate(['/app']);
       // return false;
     }

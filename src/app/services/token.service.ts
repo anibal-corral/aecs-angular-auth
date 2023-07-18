@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
+import jwt_decode, {JwtPayload} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,22 @@ export class TokenService {
   removeToken(){
     // localStorage.removeItem('token');
     removeCookie('token');  
+  }
+
+  isValidToken(){
+    const token = this.getToken();
+    if(!token){
+      return false;
+    }
+    //j
+    const decodedToken = jwt_decode<JwtPayload>(token);
+    if(decodedToken && decodedToken.exp){
+      const tokenDate = new Date(0);
+      tokenDate.setUTCSeconds(decodedToken.exp);
+      const today = new Date();
+      return tokenDate.getTime() > today.getTime();
+    }
+
+    return false;
   }
 }
